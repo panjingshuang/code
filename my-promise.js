@@ -175,7 +175,6 @@ function resolvePromise(promise2, x, resolve, reject){
 // const promise = new myPromise(function(resolve,reject){
 //   throw new Error('出现问题了呢')
 // })
-//  在抛出异常的时候产生了一个错误
 // promise.then(res =>{
 //   console.log(res) 
 // },reason =>{
@@ -225,16 +224,17 @@ function resolvePromise(promise2, x, resolve, reject){
 // 现在需要考虑下异步执行的问题
 // 然后就是then的链式调用
 
-myPromise.deferred = function(){
-  let result = {}
-  result.promise = new myPromise((resolve,reject) =>{
-    result.resolve = resolve
-    result.reject = reject
-  })
-  return result
-}
+// 这部分是promise测试
+// myPromise.deferred = function(){
+//   let result = {}
+//   result.promise = new myPromise((resolve,reject) =>{
+//     result.resolve = resolve
+//     result.reject = reject
+//   })
+//   return result
+// }
 
-module.exports = myPromise
+// module.exports = myPromise
 
 
 
