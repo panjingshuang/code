@@ -103,26 +103,126 @@ class myPromise {
       resolve(value)
     })
   }
-
-  // static reject(value){
-  //   if(value instanceof myPromise) return value
-  //   else if(value instanceof Object && 'then' in value){
-  //     // 这里不太明白
-  //     return new myPromise((resolve,reject) =>{
-  //       value.then(resolve,reject)
-  //     })
-  //   }
-  //   return new myPromise((resolve)=>{
-  //     resolve(value)
-  //   })
-  // }
+  /**
+     * myPromise.reject
+     * @param {*} reason 表示Promise被拒绝的原因
+     * @returns 
+     */
+   static reject(reason) {
+      return new myPromise((resolve, reject) => {
+        reject(reason);     
+    })
+   }  
   /**
    * Promise.all
    * @param {iterable} promises 一个promise的iterable类型（注：Array，Map，Set都属于ES6的iterable类型）的输入
    * @returns 
    */
+  // 1. 如何异步获取获取到所有的结果,creat a new isuuic
   static all(promises){
+    return new myPromise((resolve,reject)=>{
+      if(Array.isArray(promises)){
+        let result = []
+        let count = 0
+          if(promises.length == 0) return resolve(promises)
+          promises.forEach((item,index) =>{
+            if(item instanceof myPromise){
+              myPromise.resolve(item).then(res =>{
+                count ++ 
+                result[index] = res
+                if(count === promises.length ){
+                  resolve(result)
+                }
+              },reson => {
+                reject(reson)
+              })
+            }else{
+              count++
+              result[index] = item
+              if(count === promises.length ) {
+                resolve(result)
+              }
+            }
+          })
+      }else{
+        return reject(new TypeError('Argument is not iterable'))
+      }
+    })
+  }
 
+  static allSettled(promises){
+    return new myPromise((resolve,reject)=>{
+      if(Array.isArray(promises)){
+        let result = []
+        let count = 0
+          if(promises.length == 0) return resolve(promises)
+          promises.forEach((item,index) =>{
+            myPromise.resolve(item).then(res =>{
+              count ++ 
+              result[index] = {
+                status: 'fulfilled',
+                value: res
+              }
+              if(count === promises.length ){
+                resolve(result)
+              }
+            },reason => {
+              count ++ 
+              result[index] = {
+                status: 'rejected',
+                reason: reason
+              }
+              if(count === promises.length ){
+                resolve(result)
+              }
+            })
+          })
+      }else{
+        return reject(new TypeError('Argument is not iterable'))
+      }
+    })
+  }
+
+  // 这里确实有为
+  static any(promises){
+    return new myPromise((resolve,reject)=>{
+      let error = []
+      let count = 0
+        if(promises.length == 0) return reject(new AggregateError('All promises were rejected'))
+        promises.forEach((item,index) =>{
+          myPromise.resolve(item).then(res =>{
+            resolve(res)
+          },reason => {
+            count ++ 
+            error.push(reason)
+            if(count === promises.length ){
+              reject(error)
+            }
+          })
+        })
+    })
+  }
+
+  static race(promises){
+    return new myPromise((resolve,reject)=>{
+      if(Array.isArray(promises)){
+        if(promises.length > 0){
+          promises.forEach(item => {
+            myPromise.resolve(item).then(resolve,reject)
+          })
+        }
+      }else{
+        reject(new Error('Argument is not iterable'))
+      }
+    })
+  }
+
+  catch(onRejcted){
+    return this.then(undefined,onRejcted)
+  }
+
+  finally(callback){
+    return this.then(callback,callback)
   }
 } 
 
