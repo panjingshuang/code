@@ -9,3 +9,14 @@
 ![reactive的限制](./img/reactive%E7%9A%84%E9%99%90%E5%88%B6.png)
 
 #### reactive和ref的根本上的区别和原理是什么了？为啥ref就可以直接将基础元素实现响应式嗯？但是为啥要在元素中添加个value，还是说本质上其实是一样的呢？
+
+#### what's happend when nactive element binding click event?
+![native click](./img/native_element_bind_click_what_happend_on_child.png)
+
+### how to through attrs on nested component?
+![native click](./img/nest_component_inheritance_how_to_through_attr.png)
+
+
+#### hot to make attrs reactive?
+![attrs reactive](./img/attrs_reactive.png)
+
