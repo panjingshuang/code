@@ -16,6 +16,7 @@ let zeroObj = shallowRef({age:10,page:{page1:10}})
 
 <template>
   <div>{{messageRactive}}</div>
+  <input type="text" v-model="message">
   <Button :item="messageRactive"/>
 </template>
 

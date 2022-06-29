@@ -23,4 +23,11 @@
 ![attrs reactive](./img/attrs_reactive.png)
 > 在子组件中可以直接使用父组件传来的reactive数据 并且在父组件中也是可以实现响应式的 。 -->
 
+![表单元素的动态属性绑定](./img/%E8%A1%A8%E5%8D%95%E5%85%83%E7%B4%A0%E7%9A%84%E5%8A%A8%E6%80%81%E5%B1%9E%E6%80%A7%E7%9A%84%E7%BB%91%E5%AE%9A.png)
+意识是多选没有被选择的时候可以使用false-value来设置，没有选的时候也是有值的
+
+![lazy修饰符的操作需要看下](./img/lazy%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E6%93%8D%E4%BD%9C%E9%9C%80%E8%A6%81%E6%9F%A5%E7%9C%8B%E4%B8%8B.png)
+![组件上是如何使用v-model的](./img/v-model%E7%BB%84%E4%BB%B6%E4%B8%8A%E6%98%AF%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E7%9A%84.png)
 先处理基本的使用的，需要对原理进行处理的之后再查看下
+
+
