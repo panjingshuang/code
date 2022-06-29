@@ -10,13 +10,17 @@
 
 #### reactive和ref的根本上的区别和原理是什么了？为啥ref就可以直接将基础元素实现响应式嗯？但是为啥要在元素中添加个value，还是说本质上其实是一样的呢？
 
-#### what's happend when nactive element binding click event?
+<!-- #### what's happend when nactive element binding click event?
 ![native click](./img/native_element_bind_click_what_happend_on_child.png)
+> the child component will be binding native event and self event (this sort is slef to native) -->
 
-### how to through attrs on nested component?
+<!-- ### how to through attrs on nested component?
 ![native click](./img/nest_component_inheritance_how_to_through_attr.png)
+>确实是会传递给孙子组件 -->
 
 
-#### hot to make attrs reactive?
+<!-- #### hot to make attrs reactive? 父组件中的reactive对象中的数据如何在子组件中修改了？
 ![attrs reactive](./img/attrs_reactive.png)
+> 在子组件中可以直接使用父组件传来的reactive数据 并且在父组件中也是可以实现响应式的 。 -->
 
+先处理基本的使用的，需要对原理进行处理的之后再查看下
