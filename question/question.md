@@ -28,6 +28,8 @@
 
 ![lazy修饰符的操作需要看下](./img/lazy%E4%BF%AE%E9%A5%B0%E7%AC%A6%E7%9A%84%E6%93%8D%E4%BD%9C%E9%9C%80%E8%A6%81%E6%9F%A5%E7%9C%8B%E4%B8%8B.png)
 ![组件上是如何使用v-model的](./img/v-model%E7%BB%84%E4%BB%B6%E4%B8%8A%E6%98%AF%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E7%9A%84.png)
+![watch深度监听reactive对象并且普通的对象变换是否可以监听到,getters返回某个对象的属性来进行监听](./img/watcher%E6%B7%B1%E5%BA%A6%E7%9B%91%E5%90%ACreactive%E5%AF%B9%E8%B1%A1%E5%B9%B6%E6%9F%A5%E7%9C%8B%E4%B8%8B%E6%99%AE%E9%80%9A%E7%9A%84%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E7%9B%91%E5%90%AC%E5%88%B0%E5%8F%98%E6%8D%A2.png)
+![什么情况下会是用flush:post先更新vue然后执行watch了](./img/v-model%E7%BB%84%E4%BB%B6%E4%B8%8A%E6%98%AF%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E7%9A%84.png)
 先处理基本的使用的，需要对原理进行处理的之后再查看下
 
 
