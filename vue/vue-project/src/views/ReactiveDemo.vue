@@ -1,18 +1,24 @@
 <script setup lang="ts">
-// import reactiveDemo from './views/ReactiveDemo.vue';
-import Modifier from './views/Modifier.vue'
-// import Model from './views/Model.vue'
+import { ref,reactive,shallowRef, shallowReactive ,triggerRef} from "vue";
+import Button from './Button.vue'
+let message = ref(0);
+const listRef = ref([12,3,3,4,4,5])
+const messageref = ref({age:10 ,page:{page1:10}}) 
+const messageRactive = reactive({age:0 ,page:{page1:22}})
+const list = reactive([1,2,3,4,4])
+let zero = shallowRef(0)
+let zeroObj = shallowRef({age:10,page:{page1:10}})
+// 并没有找到ref 和 reactive在对待对象上有什么不同的
 </script>
 
 <template>
-  <!-- <reactiveDemo/> -->
-  <Modifier/>
-  <!-- <Model/> -->
+  <div>{{messageRactive}}</div>
+  <input type="text" v-model="message">
+  <Button :item="messageRactive"/>
 </template>
 
 <style>
 @import "@/assets/base.css";
-
 #app {
   max-width: 1280px;
   margin: 0 auto;
