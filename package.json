@@ -4,5 +4,8 @@
   },
   "scripts": {
     "test": "promises-aplus-tests my-promise"
+  },
+  "dependencies": {
+    "three": "^0.142.0"
   }
 }

@@ -51,3 +51,10 @@ watch只能监听到响应式数据的变换 但是可以监听到普通对象�
 <!-- ![不理解这是什么？大量数据的处理吗](./img/webpack/%E4%B8%8D%E7%90%86%E8%A7%A3%E8%BF%99%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E8%AF%86%E5%A4%A7%E9%87%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%A4%84%E7%90%86%E5%90%97.png) -->
 
 ![tree shaking 这部分是不太理解啥意识](./img/webpack/%E8%BF%99%E4%B8%80%E9%83%A8%E5%88%86%E6%95%B4%E4%B8%AA%E9%83%BD%E4%B8%8D%E7%90%86%E8%A7%A3%E6%98%AF%E5%95%A5%E6%84%8F%E8%AF%86.png) 整个部分都不太明白
+
+【THREE】绘制一个以线条为例子的3d世界
+【THREE】理论知识和基础知识需要先看下 
+【THREE】基础的知识部分需要运行一遍
+【THREE】网站完成了一个大致的浏览，明确了每个地方都是展示啥的
+【THREE】const camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight, 0.1,1000)方法中的每个参数分别代表着什么了？会对图像有啥影响吗？（需要查看下 宽高比会影响到mesh的大小和形状啊咋）
+【THREE】响应式变换有点问题 (renderer.setSize(canvas.clientWidth, canvas.clientHeight)  //边缘块状化) 这个宽度是手动的宽度变化是什么意识了？ 为啥canvsa.clientWidth 可以 window.innerHeight也可以了 不是十分理解这种情况
