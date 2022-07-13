@@ -57,4 +57,12 @@ watch只能监听到响应式数据的变换 但是可以监听到普通对象�
 【THREE】基础的知识部分需要运行一遍
 【THREE】网站完成了一个大致的浏览，明确了每个地方都是展示啥的
 【THREE】const camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight, 0.1,1000)方法中的每个参数分别代表着什么了？会对图像有啥影响吗？（需要查看下 宽高比会影响到mesh的大小和形状啊咋）
-【THREE】响应式变换有点问题 (renderer.setSize(canvas.clientWidth, canvas.clientHeight)  //边缘块状化) 这个宽度是手动的宽度变化是什么意识了？ 为啥canvsa.clientWidth 可以 window.innerHeight也可以了 不是十分理解这种情况
+【THREE】响应式变换有点问题 (renderer.setSize(canvas.clientWidth, canvas.clientHeight)  //边缘块状化) 这个宽度是手动的宽度变化是什么意识了？ 为啥canvsa.clientWidth 可以 window.innerHeight也可以了 不是十分理解这种情况 需要重新明白这些问题 本周五需要完成
+<!-- 【THREE】mesh.rotation mesh元素的旋转角度是如何设置了？ 绕着某个元素进行旋转的情况 position位置的设置为什么会旋转了 设置了x 和 y 的变换 坐标是相对于mesh原生的坐标还是相对于canvas坐标系的坐标了 rotation.x-->
+<!-- 【THREE】 geometry元素的颜色有问题 为什么都不是对应的数据呢 ? 颜色的问题应该是光的问题导致的 -->
+
+【THREE】ConeGeometry 圆锥的底边 即使设置的值非常大了还是不是很光滑
+【THREE】鼠标事件来移动位置和元素
+【THREE】需要将多余相同的元素进行抽离和封装然后方便元素的使用
+【THREE】LatheGeometry元素内部为什么是黑色的呢 Vector1 2 3 这个向量方法是有什么不同吗？
+【THREE】修改场景的背景颜色
