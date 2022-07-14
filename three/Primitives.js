@@ -24,6 +24,12 @@ const main = Utils.main
 
 // 
 
-main(function(){
-  return new THREE.PlaneGeometry(9,9,10,10)
-},20)
+// main(function(){
+//   //板子
+//   return new THREE.PlaneGeometry(9,9,10,10)
+// },20)
+
+// main(function(){
+//   //中间有环的2D圆盘
+//   return new THREE.RingGeometry(2,7,10,1,0,Math.PI * 1.4)
+// },20)
