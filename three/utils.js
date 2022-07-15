@@ -8,10 +8,15 @@ function main(fn=()=>{},z = 20){
   renderer.setSize(canvas.clientWidth, canvas.clientHeight)
 
   const cone = fn(scene)
-  const matrial = new THREE.MeshPhongMaterial({color: 0x44aa88})
-  let mesh =  new THREE.Mesh(cone, matrial)
-  scene.add(mesh)
-
+  let mesh
+  if(Array.isArray(cone)){ // 如果是数组的话，就将mesh返回就好了
+    mesh = cone[0]
+    scene.add(mesh)
+  }else{ // 是对象还是返回的是geometry元素好了
+    const matrial = new THREE.MeshPhongMaterial({color: 0x44aa88})
+    mesh =  new THREE.Mesh(cone, matrial)
+    scene.add(mesh)
+  }
   const light = new THREE.DirectionalLight(0xffffff, 1)
   light.position.set(10,10,10)
   scene.add(light)

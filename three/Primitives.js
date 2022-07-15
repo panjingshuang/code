@@ -63,13 +63,11 @@ const main = Utils.main
 //   return new THREE.TorusKnotGeometry(5,1,100,100,8,8)
 // },20)
 
-// 这里不是太明白 哪里有了问题 
-main(function(scene) {
+// 线条的问题是
+main(function() {
   const box = new THREE.BoxGeometry(8,2,2,2)
   const edges = new THREE.EdgesGeometry(box)
-  const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({
-    color: 0xffffff
-  }))
-  scene.add(line)
-  return edges
+  const material = new THREE.LineBasicMaterial({color: 0xffffff})
+  const line = new THREE.LineSegments(edges,material)
+  return [line]
 },20)
