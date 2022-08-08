@@ -13,7 +13,10 @@ function main(fn=()=>{},z = 20){
     mesh = cone[0]
     scene.add(mesh)
   }else{ // 是对象还是返回的是geometry元素好了
-    const matrial = new THREE.MeshPhongMaterial({color: 0x44aa88})
+    const matrial = new THREE.MeshPhongMaterial({
+      color: 0x44aa88,
+      side: THREE.DoubleSide // 对于二位图形，没有该属性看到元素反面的时候会消失
+    })
     mesh =  new THREE.Mesh(cone, matrial)
     scene.add(mesh)
   }
@@ -22,8 +25,8 @@ function main(fn=()=>{},z = 20){
   scene.add(light)
   function animate(){
     requestAnimationFrame(animate)
-    mesh.rotation.x += 0.01
-    mesh.rotation.y += 0.01
+    mesh.rotation.x += 0.001
+    mesh.rotation.y += 0.001
     renderer.render(scene,camra)
   }
   animate()
