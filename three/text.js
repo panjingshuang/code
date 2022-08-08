@@ -1,7 +1,6 @@
 import Utils from './utils.js'
-import * as THREE from './three.module'
-import { FontLoader } from 'FontLoader';
-
+import { FontLoader } from './FontLoader.js';
+import { TextGeometry } from './TextGeometry.js';
 const main = Utils.main
 
 const loader = new FontLoader();
