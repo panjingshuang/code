@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { DragControls } from '../utils/DragControls.js'
 
-// 样例拖拽控制器
+// 样例拖拽控制器现在的问题是无法对原本的物体进行颜色还原的情况，并且之前和之后打组进入的元素都会放到一个group中
 const canvas = document.getElementById('myCanvas')
 const scene = new THREE.Scene()
 scene.background = new THREE.Color(0xf0f0f0)
@@ -35,18 +35,19 @@ function eventBind(){
 // 点击事件
 function onClick(event){
   event.preventDefault();
+  const draggableObjects = controls.getObjects() // 获取控制器中的所有的元素
+  draggableObjects.length = 0;
   if(enableSelection){
-    const draggableObjects = controls.getObjects() // 获取控制器中的所有的元素
-    draggableObjects.length = 0;
-    // 这里是啥意识呢？
+    //不理解
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 		mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    // 这个是啥意识呢？
+    // 通过摄像和鼠标位置更新射线
     raycaster.setFromCamera(mouse, camera)
+    // 计算物体和射线的焦点
     const intersections = raycaster.intersectObjects( objects, true );
     if(intersections.length > 0){
       const object = intersections[ 0 ].object;
-      if(group.children.includes( object )){
+      if(!group.children.includes( object )){
         object.material.emissive.set( 0xaaaaaa );
 				group.attach( object );
       }
@@ -57,6 +58,9 @@ function onClick(event){
       controls.transformGroup = false; // 设置是true的时候是将拖动整个组而不是单个元素
       draggableObjects.push( ...objects );
     }
+  }else{
+    controls.transformGroup = false;
+    draggableObjects.push( ...objects );
   }
   render()
 }
