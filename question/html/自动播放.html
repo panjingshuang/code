@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <audio controls autoplay id="audioId">
+    <source src="./Guitar.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    window.onload = function() {
+      let demo = window.setInterval(() =>{
+        let audio = document.getElementById('audioId')
+        if(audio.paused) {
+          audio.paused = false 
+          audio.play()
+        }
+      },100)
+    }
+  </script>
+</body>
+</html>

@@ -3,10 +3,11 @@ import * as THREE from 'three'
 import { FirstPersonControls } from '../utils/FirstPersonControls.js'
 const canvas = document.getElementById('myCanvas')
 const scene = new THREE.Scene()
-scene.background = new THREE.Color(0xAAAAAA)
+scene.background = new THREE.Color(0xefd1b5)
+scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025)
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight,0.1,1000)
-camera.position.z = 20
+camera.position.z = 50
 
 const renderer = new THREE.WebGLRenderer({canvas})
 renderer.setSize(canvas.clientWidth,canvas.clientHeight)
