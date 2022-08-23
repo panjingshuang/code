@@ -18,7 +18,6 @@ function init(){
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight,0.1,1000)
   camera.position.set( 100, 800, - 800 );
 	camera.lookAt( - 100, 810, - 800 );
-  // 页面样式的渲染是个大问题
 
   renderer = new THREE.WebGLRenderer({canvas})
   renderer.setPixelRatio( window.devicePixelRatio );
@@ -33,6 +32,7 @@ function init(){
   controls.movementSpeed = 150;
   controls.lookSpeed = 0.1;
   window.addEventListener( 'resize', onWindowResize );
+  // 绘制柱状图咋页面上
 }
 
 function animate(){
