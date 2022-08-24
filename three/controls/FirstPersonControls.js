@@ -14,10 +14,10 @@ function init(){
   const canvas = document.getElementById('myCanvas')
   scene = new THREE.Scene()
   scene.background = new THREE.Color(0xefd1b5)
-  scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025)
+  // scene.fog = new THREE.FogExp2( 0xefd1b5, 0.0025)
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight,0.1,1000)
-  camera.position.set( 100, 800, - 800 );
-	camera.lookAt( - 100, 810, - 800 );
+  // camera.position.set( 100, 800, - 800 );
+	// camera.lookAt( - 100, 810, - 800 );
 
   renderer = new THREE.WebGLRenderer({canvas})
   renderer.setPixelRatio( window.devicePixelRatio );
@@ -32,7 +32,10 @@ function init(){
   controls.movementSpeed = 150;
   controls.lookSpeed = 0.1;
   window.addEventListener( 'resize', onWindowResize );
-  // 绘制柱状图咋页面上
+  // 随机创建多个不同的柱状体
+  const geometry = new THREE.BoxGeometry( 100, 100, 100 );
+  const object = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff}))
+  scene.add(object)
 }
 
 function animate(){
