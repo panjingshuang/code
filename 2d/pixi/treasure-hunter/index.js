@@ -10,6 +10,13 @@ const  COLLISION = {
   LEFT: 'LEFT'
 }
 
+const KEYCODE = {
+  TOP: 38,
+  BOTTOM: 40,
+  RIGHT: 39,
+  LEFT: 37
+}
+
 let app = new Application({
   width: 512,
   height: 512,
@@ -30,24 +37,25 @@ spacing = 60
 xOffset = 100,
 speed = 1,
 direcion = 1
+let door,dungeon,explorer,treasure
 
 const setup = (loader, resources)  =>{
   let textures = resources['imgs/treasureExp.json'].textures 
  
-  const door = new Sprite(textures['door.png']) 
-  const dungeon = new Sprite(textures['dungeon.png'])
-  const explorer = new Sprite(textures['explorer.png'])
-  const treasure = new Sprite(textures['treasure.png'])
+  door = new Sprite(textures['door.png']) 
+  dungeon = new Sprite(textures['dungeon.png'])
+  explorer = new Sprite(textures['explorer.png'])
+  treasure = new Sprite(textures['treasure.png'])
   baseContainer.addChild(dungeon)
   baseContainer.addChild(door)
   baseContainer.addChild(treasure)
   baseContainer.addChild(explorer)
 
   door.position.set(32,0)
-  explorer.x = 68
-  explorer.y = baseContainer.height / 2 - explorer.height / 2
-  explorer.vx = 0;
-  explorer.vy = 0;
+  explorer.x = 38
+  explorer.y = 40
+  explorer.vx = 2;
+  explorer.vy = 2;
   treasure.x = baseContainer.width - treasure.width - 48
   treasure.y = baseContainer.height / 2 - treasure.height / 2
 
@@ -109,11 +117,44 @@ function onContain(sprite, container){
   }
   return {collision}
 }
+
 keyBroand()
 // 移动操作-鼠标和键盘事件
 function keyBroand(){
-  // 对键盘进行监听
   window.addEventListener('keydown',(e) =>{
-    // 判断对象的位置
+    if(e.keyCode == KEYCODE.LEFT) {
+      explorer.x -= explorer.vx
+    }else if(e.keyCode == KEYCODE.RIGHT){
+      explorer.x += explorer.vx
+    }else if(e.keyCode == KEYCODE.TOP){
+      explorer.y -= explorer.vy
+    }else if(e.keyCode == KEYCODE.BOTTOM){
+      explorer.y += explorer.vy
+    }
+    let contain = onContain(explorer, {x: 28, y: 11, width: 450, height: 470})
+    if(contain.collision){
+      switch(contain.collision){
+        case COLLISION.TOP:
+          explorer.y = 11
+          break
+        case COLLISION.BOTTOM:
+          explorer.y = 481 - explorer.height
+          break
+        case COLLISION.LEFT:
+          explorer.x = 28
+          break
+        case COLLISION.RIGHT:
+          explorer.x = 478 - explorer.width
+          break
+      }
+    }
   })
+}
+
+// 主要是判断是否小怪物和猎人是否出现了碰撞了
+function onCollision(blob, explorer){
+  let blobPoint = {}
+  let explorerPoint = {}
+
+  // 转换到坐标中点上去
 }
