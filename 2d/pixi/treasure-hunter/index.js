@@ -2,19 +2,28 @@
 let Application = PIXI.Application,
 Sprite = PIXI.Sprite,
 Container = PIXI.Container
+
 const  COLLISION = {
   TOP: 'TOP',
   BOTTOM: 'BOTTOM',
   RIGHT: 'RIGHT',
   LEFT: 'LEFT'
 }
-
+//keyCode
 const KEYCODE = {
   TOP: 38,
   BOTTOM: 40,
   RIGHT: 39,
   LEFT: 37
 }
+// 围墙范围
+const RANGE = {
+  WIDTH: 450,
+  HEIGHT:470,
+  X: 28,
+  Y: 11
+}
+
 
 let app = new Application({
   width: 512,
@@ -73,12 +82,7 @@ const setup = (loader, resources)  =>{
     blobs.push(blob)
     baseContainer.addChild(blob)
   }
-  onGameOver()
-  // // 绘制边界图形
-  // let rect = new PIXI.Graphics()
-  // rect.lineStyle(5, 0xFF0000)
-  // rect.drawRect(28,11,450,470)
-  // baseContainer.addChild(rect)
+
 }
 
 loader
@@ -94,11 +98,18 @@ function play(){
 }
 play()
 
+function onInit(){
+  // 初始化元素的时候
+  isStart = true
+  window.addEventListener('keydown',onkeyDown)
+  // 删除元素中的所有数据 删除所有的数据
+}
 
+// 移动和变换小怪为的动作
 function onBlobRun(){
   blobs.forEach(blob =>{
     blob.y += blob.vy
-    let contain = onContain(blob,{x: 28, y: 11, width: 450, height: 470})
+    let contain = onContain(blob,{x: RANGE.X, y: RANGE.Y, width: RANGE.WIDTH, height: RANGE.HEIGHT})
     if(contain.collision == COLLISION.TOP || contain.collision == COLLISION.BOTTOM){
       blob.vy *= -1
     }
@@ -108,7 +119,6 @@ function onBlobRun(){
     }
   })
 }
-
 
 // 超出边界的范围如何处理
 function onContain(sprite, container){
@@ -128,12 +138,7 @@ function onContain(sprite, container){
   return {collision}
 }
 
-keyBroand()
-// 移动操作-鼠标和键盘事件
-function keyBroand(){
-  window.addEventListener('keydown',onkeyDown)
-}
-
+// 键盘事件
 function onkeyDown(e){
   if(e.keyCode == KEYCODE.LEFT) {
     explorer.x -= explorer.vx
@@ -144,20 +149,20 @@ function onkeyDown(e){
   }else if(e.keyCode == KEYCODE.BOTTOM){
     explorer.y += explorer.vy
   }
-  let contain = onContain(explorer, {x: 28, y: 11, width: 450, height: 470})
+  let contain = onContain(explorer, {x: RANGE.X, y: RANGE.Y, width: RANGE.WIDTH, height: RANGE.HEIGHT})
   if(contain.collision){
     switch(contain.collision){
       case COLLISION.TOP:
-        explorer.y = 11
+        explorer.y = RANGE.Y
         break
       case COLLISION.BOTTOM:
-        explorer.y = 481 - explorer.height
+        explorer.y = RANGE.HEIGHT + RANGE.Y - explorer.height
         break
       case COLLISION.LEFT:
-        explorer.x = 28
+        explorer.x = RANGE.X
         break
       case COLLISION.RIGHT:
-        explorer.x = 478 - explorer.width
+        explorer.x = RANGE.WIDTH + RANGE.X - explorer.width
         break
     }
   }
@@ -166,8 +171,7 @@ function onkeyDown(e){
     onGameMsg('You Win the Game!')
   }
 }
-
-// 主要是判断是否小怪物和猎人是否出现了碰撞了
+// 判断对象是否发生了碰撞
 function onCollision(blob, explorer){
   let blobPoint = {}
   let explorerPoint = {}
@@ -192,6 +196,7 @@ function onCollision(blob, explorer){
   return false
 }
 
+// 游戏结束之后的操作
 function onGameMsg(text = 'Game Over!'){
   let gamerOverBg = new PIXI.Graphics()
   gamerOverBg.beginFill(0x000000,0.5)
