@@ -2,7 +2,6 @@
 let Application = PIXI.Application,
 Sprite = PIXI.Sprite,
 Container = PIXI.Container
-
 const  COLLISION = {
   TOP: 'TOP',
   BOTTOM: 'BOTTOM',
@@ -30,6 +29,10 @@ document.body.appendChild(app.view)
 let loader = app.loader
 let baseContainer = new Container()
 app.stage.addChild(baseContainer);
+let gameOverContainer = new Container() // gameOverContainer
+app.stage.addChild(gameOverContainer)
+
+let isStart = true
 
 let blobs = [],
 blobsNum = 3,
@@ -54,8 +57,8 @@ const setup = (loader, resources)  =>{
   door.position.set(32,0)
   explorer.x = 38
   explorer.y = 40
-  explorer.vx = 2;
-  explorer.vy = 2;
+  explorer.vx = 3;
+  explorer.vy = 3;
   treasure.x = baseContainer.width - treasure.width - 48
   treasure.y = baseContainer.height / 2 - treasure.height / 2
 
@@ -70,11 +73,12 @@ const setup = (loader, resources)  =>{
     blobs.push(blob)
     baseContainer.addChild(blob)
   }
-  // 绘制边界图形
-  let rect = new PIXI.Graphics()
-  rect.lineStyle(5, 0xFF0000)
-  rect.drawRect(28,11,450,470)
-  baseContainer.addChild(rect)
+  onGameOver()
+  // // 绘制边界图形
+  // let rect = new PIXI.Graphics()
+  // rect.lineStyle(5, 0xFF0000)
+  // rect.drawRect(28,11,450,470)
+  // baseContainer.addChild(rect)
 }
 
 loader
@@ -84,7 +88,9 @@ loader
 // 执行动画
 function play(){
   requestAnimationFrame(play)
-  onBlobRun()
+  if(isStart){
+    onBlobRun()
+  }
 }
 play()
 
@@ -95,6 +101,10 @@ function onBlobRun(){
     let contain = onContain(blob,{x: 28, y: 11, width: 450, height: 470})
     if(contain.collision == COLLISION.TOP || contain.collision == COLLISION.BOTTOM){
       blob.vy *= -1
+    }
+    if(onCollision(blob,explorer)){
+      isStart = false
+      onGameMsg('Game Over!')
     }
   })
 }
@@ -121,34 +131,40 @@ function onContain(sprite, container){
 keyBroand()
 // 移动操作-鼠标和键盘事件
 function keyBroand(){
-  window.addEventListener('keydown',(e) =>{
-    if(e.keyCode == KEYCODE.LEFT) {
-      explorer.x -= explorer.vx
-    }else if(e.keyCode == KEYCODE.RIGHT){
-      explorer.x += explorer.vx
-    }else if(e.keyCode == KEYCODE.TOP){
-      explorer.y -= explorer.vy
-    }else if(e.keyCode == KEYCODE.BOTTOM){
-      explorer.y += explorer.vy
+  window.addEventListener('keydown',onkeyDown)
+}
+
+function onkeyDown(e){
+  if(e.keyCode == KEYCODE.LEFT) {
+    explorer.x -= explorer.vx
+  }else if(e.keyCode == KEYCODE.RIGHT){
+    explorer.x += explorer.vx
+  }else if(e.keyCode == KEYCODE.TOP){
+    explorer.y -= explorer.vy
+  }else if(e.keyCode == KEYCODE.BOTTOM){
+    explorer.y += explorer.vy
+  }
+  let contain = onContain(explorer, {x: 28, y: 11, width: 450, height: 470})
+  if(contain.collision){
+    switch(contain.collision){
+      case COLLISION.TOP:
+        explorer.y = 11
+        break
+      case COLLISION.BOTTOM:
+        explorer.y = 481 - explorer.height
+        break
+      case COLLISION.LEFT:
+        explorer.x = 28
+        break
+      case COLLISION.RIGHT:
+        explorer.x = 478 - explorer.width
+        break
     }
-    let contain = onContain(explorer, {x: 28, y: 11, width: 450, height: 470})
-    if(contain.collision){
-      switch(contain.collision){
-        case COLLISION.TOP:
-          explorer.y = 11
-          break
-        case COLLISION.BOTTOM:
-          explorer.y = 481 - explorer.height
-          break
-        case COLLISION.LEFT:
-          explorer.x = 28
-          break
-        case COLLISION.RIGHT:
-          explorer.x = 478 - explorer.width
-          break
-      }
-    }
-  })
+  }
+  if(onCollision(explorer, treasure)){
+    isStart = false
+    onGameMsg('You Win the Game!')
+  }
 }
 
 // 主要是判断是否小怪物和猎人是否出现了碰撞了
@@ -157,4 +173,40 @@ function onCollision(blob, explorer){
   let explorerPoint = {}
 
   // 转换到坐标中点上去
+  blobPoint.x = blob.x + blob.width / 2
+  blobPoint.y = blob.y + blob.height / 2
+  
+  explorerPoint.x = explorer.x + explorer.width / 2 
+  explorerPoint.y = explorer.y + explorer.height / 2
+
+  // 宽度间的碰撞
+  let widthX = blob.width / 2 + explorer.width / 2
+  let heightY = explorer.height / 2 + blob.height / 2
+
+  let currentWidth = Math.abs(blobPoint.x - explorer.x)
+  let currentHeight = Math.abs(blobPoint.y - explorer.y)
+
+  if(currentWidth < widthX &&  currentHeight < heightY){
+    return true
+  } 
+  return false
+}
+
+function onGameMsg(text = 'Game Over!'){
+  let gamerOverBg = new PIXI.Graphics()
+  gamerOverBg.beginFill(0x000000,0.5)
+  gamerOverBg.drawRect(0,0,app.stage.width,app.stage.height)
+  gamerOverBg.endFill()
+  gameOverContainer.addChild(gamerOverBg)
+  let gameOverText =  new PIXI.Text(text,{
+    fontFamily : 'Arial',
+    fontSize: 44, 
+    fill : 0xffffff, 
+    align : 'center'
+  });
+  gameOverText.x = app.stage.width / 2  - gameOverText.width / 2
+  gameOverText.y = app.stage.height / 2  - gameOverText.height 
+  gameOverContainer.addChild(gameOverText)
+
+  window.removeEventListener('keydown', onkeyDown)
 }
