@@ -1,9 +1,9 @@
 
 let Application = PIXI.Application,
-Sprite = PIXI.Sprite,
-Container = PIXI.Container
+  Sprite = PIXI.Sprite,
+  Container = PIXI.Container
 
-const  COLLISION = {
+const COLLISION = {
   TOP: 'TOP',
   BOTTOM: 'BOTTOM',
   RIGHT: 'RIGHT',
@@ -19,7 +19,7 @@ const KEYCODE = {
 // 围墙范围
 const RANGE = {
   WIDTH: 450,
-  HEIGHT:470,
+  HEIGHT: 470,
   X: 28,
   Y: 11
 }
@@ -44,17 +44,32 @@ app.stage.addChild(gameOverContainer)
 let isStart = true
 
 let blobs = [],
-blobsNum = 3,
-spacing = 60
+  blobsNum = 3,
+  spacing = 60
 xOffset = 100,
-speed = 1,
-direcion = 1
-let door,dungeon,explorer,treasure
+  speed = 1,
+  direcion = 1
+let door, dungeon, explorer, treasure
+let gamerOverBg, gameOverText // 结果数据
 
-const setup = (loader, resources)  =>{
-  let textures = resources['imgs/treasureExp.json'].textures 
- 
-  door = new Sprite(textures['door.png']) 
+
+loader
+  .add('imgs/treasureExp.json')
+  .load(setup)
+
+// 执行动画
+function play() {
+  requestAnimationFrame(play)
+  if (isStart) {
+    onBlobRun()
+  }
+}
+play()
+
+function setup(loader, resources) {
+  let textures = resources['imgs/treasureExp.json'].textures
+
+  door = new Sprite(textures['door.png'])
   dungeon = new Sprite(textures['dungeon.png'])
   explorer = new Sprite(textures['explorer.png'])
   treasure = new Sprite(textures['treasure.png'])
@@ -63,7 +78,7 @@ const setup = (loader, resources)  =>{
   baseContainer.addChild(treasure)
   baseContainer.addChild(explorer)
 
-  door.position.set(32,0)
+  door.position.set(32, 0)
   explorer.x = 38
   explorer.y = 40
   explorer.vx = 3;
@@ -72,7 +87,7 @@ const setup = (loader, resources)  =>{
   treasure.y = baseContainer.height / 2 - treasure.height / 2
 
   // 制作泡泡怪们
-  for(let i = 1; i <= blobsNum ;i ++){
+  for (let i = 1; i <= blobsNum; i++) {
     let blob = new Sprite(textures['blob.png']); // 小怪物
     blob.x = spacing * i + xOffset
     blob.y = baseContainer.height / 2 - blob.height / 2 - 48
@@ -82,76 +97,65 @@ const setup = (loader, resources)  =>{
     blobs.push(blob)
     baseContainer.addChild(blob)
   }
-
+  onGameData() // 结果数据渲染
+  onInit() // 初始化数据
 }
 
-loader
-.add('imgs/treasureExp.json')
-.load(setup)
-
-// 执行动画
-function play(){
-  requestAnimationFrame(play)
-  if(isStart){
-    onBlobRun()
-  }
-}
-play()
-
-function onInit(){
-  // 初始化元素的时候
+function onInit() { // 初始化数据
   isStart = true
-  window.addEventListener('keydown',onkeyDown)
-  // 删除元素中的所有数据 删除所有的数据
+  window.addEventListener('keydown', onkeyDown)
+  gameOverContainer.visible = false
 }
 
 // 移动和变换小怪为的动作
-function onBlobRun(){
-  blobs.forEach(blob =>{
+function onBlobRun() {
+  blobs.forEach(blob => {
     blob.y += blob.vy
-    let contain = onContain(blob,{x: RANGE.X, y: RANGE.Y, width: RANGE.WIDTH, height: RANGE.HEIGHT})
-    if(contain.collision == COLLISION.TOP || contain.collision == COLLISION.BOTTOM){
+    let contain = onContain(blob, { x: RANGE.X, y: RANGE.Y, width: RANGE.WIDTH, height: RANGE.HEIGHT })
+    if (contain.collision == COLLISION.TOP || contain.collision == COLLISION.BOTTOM) {
       blob.vy *= -1
     }
-    if(onCollision(blob,explorer)){
+    if (onCollision(blob, explorer)) {
       isStart = false
-      onGameMsg('Game Over!')
+      gameOverContainer.visible = true
+      gamerOverText.text = 'Game Over!'
     }
   })
 }
 
 // 超出边界的范围如何处理
-function onContain(sprite, container){
+function onContain(sprite, container) {
   let collision = undefined
-  if(sprite.x < container.x) {
+  if (sprite.x < container.x) {
     collision = COLLISION.LEFT
   }
-  if(sprite.y < container.y){
+  if (sprite.y < container.y) {
     collision = COLLISION.TOP
   }
-  if(sprite.x > (container.x + container.width - sprite.width)){
-    collision =  COLLISION.RIGHT
+  if (sprite.x > (container.x + container.width - sprite.width)) {
+    collision = COLLISION.RIGHT
   }
-  if(sprite.y > (container.y + container.height - sprite.height)){
-    collision =  COLLISION.BOTTOM
+  if (sprite.y > (container.y + container.height - sprite.height)) {
+    collision = COLLISION.BOTTOM
   }
-  return {collision}
+  return { collision }
 }
 
 // 键盘事件
-function onkeyDown(e){
-  if(e.keyCode == KEYCODE.LEFT) {
+function onkeyDown(e) {
+  if (!isStart) return
+  if (e.keyCode == KEYCODE.LEFT) {
     explorer.x -= explorer.vx
-  }else if(e.keyCode == KEYCODE.RIGHT){
+  } else if (e.keyCode == KEYCODE.RIGHT) {
     explorer.x += explorer.vx
-  }else if(e.keyCode == KEYCODE.TOP){
+  } else if (e.keyCode == KEYCODE.TOP) {
     explorer.y -= explorer.vy
-  }else if(e.keyCode == KEYCODE.BOTTOM){
+  } else if (e.keyCode == KEYCODE.BOTTOM) {
     explorer.y += explorer.vy
   }
-  let contain = onContain(explorer, {x: RANGE.X, y: RANGE.Y, width: RANGE.WIDTH, height: RANGE.HEIGHT})
-  if(contain.collision){
-    switch(contain.collision){
+  let contain = onContain(explorer, { x: RANGE.X, y: RANGE.Y, width: RANGE.WIDTH, height: RANGE.HEIGHT })
+  if (contain.collision) {
+    switch (contain.collision) {
       case COLLISION.TOP:
         explorer.y = RANGE.Y
         break
@@ -166,21 +170,22 @@ function onkeyDown(e){
         break
     }
   }
-  if(onCollision(explorer, treasure)){
+  if (onCollision(explorer, treasure)) {
     isStart = false
-    onGameMsg('You Win the Game!')
+    gameOverContainer.visible = true
+    gameOverText.text = 'You Win The Game!'
   }
 }
 // 判断对象是否发生了碰撞
-function onCollision(blob, explorer){
+function onCollision(blob, explorer) {
   let blobPoint = {}
   let explorerPoint = {}
 
   // 转换到坐标中点上去
   blobPoint.x = blob.x + blob.width / 2
   blobPoint.y = blob.y + blob.height / 2
-  
-  explorerPoint.x = explorer.x + explorer.width / 2 
+
+  explorerPoint.x = explorer.x + explorer.width / 2
   explorerPoint.y = explorer.y + explorer.height / 2
 
   // 宽度间的碰撞
@@ -190,28 +195,28 @@ function onCollision(blob, explorer){
   let currentWidth = Math.abs(blobPoint.x - explorer.x)
   let currentHeight = Math.abs(blobPoint.y - explorer.y)
 
-  if(currentWidth < widthX &&  currentHeight < heightY){
+  if (currentWidth < widthX && currentHeight < heightY) {
     return true
-  } 
+  }
   return false
 }
-
-// 游戏结束之后的操作
-function onGameMsg(text = 'Game Over!'){
-  let gamerOverBg = new PIXI.Graphics()
-  gamerOverBg.beginFill(0x000000,0.5)
-  gamerOverBg.drawRect(0,0,app.stage.width,app.stage.height)
+// 结果界面的渲染
+function onGameData(text = 'Game Over!') {
+  gamerOverBg = new PIXI.Graphics()
+  gamerOverBg.beginFill(0x000000, 0.5)
+  gamerOverBg.drawRect(0, 0, app.stage.width, app.stage.height)
   gamerOverBg.endFill()
   gameOverContainer.addChild(gamerOverBg)
-  let gameOverText =  new PIXI.Text(text,{
-    fontFamily : 'Arial',
-    fontSize: 44, 
-    fill : 0xffffff, 
-    align : 'center'
+  gameOverText = new PIXI.Text(text, {
+    fontFamily: 'Arial',
+    fontSize: 44,
+    fill: 0xffffff,
+    align: 'center'
   });
-  gameOverText.x = app.stage.width / 2  - gameOverText.width / 2
-  gameOverText.y = app.stage.height / 2  - gameOverText.height 
+  gameOverText.x = app.stage.width / 2 - gameOverText.width / 2
+  gameOverText.y = app.stage.height / 2 - gameOverText.height
   gameOverContainer.addChild(gameOverText)
-
-  window.removeEventListener('keydown', onkeyDown)
+  gameOverContainer.visible = false
 }
+
+
