@@ -50,7 +50,7 @@ xOffset = 100,
   speed = 1,
   direcion = 1
 let door, dungeon, explorer, treasure
-let gamerOverBg, gameOverText // 结果数据
+let gamerOverBg, gameOverText, reBackText // 结果数据
 
 
 loader
@@ -99,12 +99,14 @@ function setup(loader, resources) {
   }
   onGameData() // 结果数据渲染
   onInit() // 初始化数据
+  gameOverContainer.visible = false
+  window.addEventListener('keydown', onkeyDown)
 }
 
 function onInit() { // 初始化数据
   isStart = true
-  window.addEventListener('keydown', onkeyDown)
   gameOverContainer.visible = false
+  explorer.position.set(38, 40)
 }
 
 // 移动和变换小怪为的动作
@@ -173,7 +175,7 @@ function onkeyDown(e) {
   if (onCollision(explorer, treasure)) {
     isStart = false
     gameOverContainer.visible = true
-    gameOverText.text = 'You Win The Game!'
+    onGameData('You Win the Game')
   }
 }
 // 判断对象是否发生了碰撞
@@ -200,23 +202,51 @@ function onCollision(blob, explorer) {
   }
   return false
 }
+
 // 结果界面的渲染
 function onGameData(text = 'Game Over!') {
-  gamerOverBg = new PIXI.Graphics()
-  gamerOverBg.beginFill(0x000000, 0.5)
-  gamerOverBg.drawRect(0, 0, app.stage.width, app.stage.height)
-  gamerOverBg.endFill()
-  gameOverContainer.addChild(gamerOverBg)
-  gameOverText = new PIXI.Text(text, {
-    fontFamily: 'Arial',
-    fontSize: 44,
-    fill: 0xffffff,
-    align: 'center'
-  });
-  gameOverText.x = app.stage.width / 2 - gameOverText.width / 2
-  gameOverText.y = app.stage.height / 2 - gameOverText.height
-  gameOverContainer.addChild(gameOverText)
-  gameOverContainer.visible = false
+
+  if (!gamerOverBg) {
+    gamerOverBg = new PIXI.Graphics()
+    gamerOverBg.beginFill(0x000000, 0.5)
+    gamerOverBg.drawRect(0, 0, app.stage.width, app.stage.height)
+    gamerOverBg.endFill()
+    gameOverContainer.addChild(gamerOverBg)
+  }
+
+  if (!gameOverText) {
+    gameOverText = new PIXI.Text(text, {
+      fontFamily: 'Arial',
+      fontSize: 44,
+      fill: 0xffffff,
+      align: 'center'
+    });
+    gameOverContainer.addChild(gameOverText)
+  }
+  if (!reBackText) {
+    reBackText = new PIXI.Text('rePlay', {
+      fontFamily: 'Arial',
+      fontSize: 20,
+      fill: 0xffffff,
+      align: 'center',
+    });
+    gameOverContainer.addChild(reBackText)
+
+    reBackText.x = onPositionCenter(app.stage, reBackText).x
+    reBackText.y = onPositionCenter(app.stage, reBackText).y + 50
+  }
+
+  gameOverText.text = text
+  gameOverText.x = onPositionCenter(app.stage, gameOverText).x 
+  gameOverText.y = onPositionCenter(app.stage, gameOverText).y - 50
+}
+
+
+function onPositionCenter(stage, elem) {
+  return {
+    x: stage.width / 2 - elem.width / 2,
+    y: stage.height / 2 - elem.height
+  }
 }
 
 
