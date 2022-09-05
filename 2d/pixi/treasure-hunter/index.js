@@ -120,7 +120,7 @@ function onBlobRun() {
     if (onCollision(blob, explorer)) {
       isStart = false
       gameOverContainer.visible = true
-      gamerOverText.text = 'Game Over!'
+      onGameData('Game Over!')
     }
   })
 }
@@ -231,9 +231,10 @@ function onGameData(text = 'Game Over!') {
       align: 'center',
     });
     gameOverContainer.addChild(reBackText)
-
     reBackText.x = onPositionCenter(app.stage, reBackText).x
     reBackText.y = onPositionCenter(app.stage, reBackText).y + 50
+    reBackText.interactive = true
+    reBackText.on('click',onReplayFun)  
   }
 
   gameOverText.text = text
@@ -247,6 +248,10 @@ function onPositionCenter(stage, elem) {
     x: stage.width / 2 - elem.width / 2,
     y: stage.height / 2 - elem.height
   }
+}
+
+function onReplayFun(e){
+  onInit()
 }
 
 
