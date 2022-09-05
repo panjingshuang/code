@@ -5,8 +5,76 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>九宫格跑马灯抽奖操作</title>
+  <style>
+    .lamp{
+      width: 375px;
+      height: 561.5px;
+      background: url(./imgs/bg.jpg) no-repeat  center/100%;
+      margin-left: 500px;
+      margin-top: 200px;
+    }
+    .lamp-ul{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      padding-left: 37px;
+      padding-top: 76px;
+    }
+    .lamp-ul li{
+      width: 100px;
+      height: 100px;
+    }
+    .lamp-ul li[class^= "lamp-li-" ] div{
+      width: 100%;
+      height: 100%;
+      background: url(./imgs/prize_bg.png) no-repeat center /100%;
+    }
+    .lamp-ul li div img{
+      width: 100%;
+      height: 100%;
+    }
+
+    .on{
+      background: url(./imgs/prize_bg_hover.png) no-repeat center / 100% !important; 
+    }
+  </style>
 </head>
 <body>
-  
+  <!-- 现将元素摆到页面上 -->
+  <div class="lamp">
+    <ul class="lamp-ul">
+      <li class="lamp-li-1 ">
+        <div class="lamp-li-1-img on"><img src="./imgs/ps.png" alt=""></div>
+      </li>
+      <li class="lamp-li-2">
+        <div class="lamp-li-2-img"> <img src="./imgs/weibo.png" alt=""></div>
+      </li>
+      <li class="lamp-li-3">
+        <div class="lamp-li-3-img"> <img src="./imgs/iphone13.png" alt=""></div>
+      </li>
+      <li class="lamp-li-8">
+        <div class="lamp-li-8-img"> <img src="./imgs/weibo.png" alt=""></div>
+      </li>
+      <li class="turntable-btn-li" id="turntable-btn-li">
+        <div class="turntable-btn"></div>
+      </li>
+      <li class="lamp-li-4">
+        <div class="lamp-li-4-img"> <img src="./imgs/weibo.png" alt=""></div>
+      </li>
+      <li class="lamp-li-7">
+        <div class="lamp-li-7-img"> <img src="./imgs/ipad_mini.png" alt=""></div>
+      </li>
+      <li class="lamp-li-6">
+        <div class="lamp-li-6-img"> <img src="./imgs/thanks.png" alt=""></div>
+      </li>
+      <li class="lamp-li-5">
+        <div class="lamp-li-5-img"> <img src="./imgs/ipadPro.png" alt=""></div>
+      </li>
+    </ul>
+  </div>
+  <script src="./index.js"></script>
 </body>
 </html>
