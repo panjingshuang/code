@@ -1,0 +1,87 @@
+{"frames": {
+
+"colormap.png":
+{
+	"frame": {"x":0,"y":0,"w":256,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":16},
+	"sourceSize": {"w":256,"h":16}
+},
+"displacement_BG.jpeg":
+{
+	"frame": {"x":256,"y":0,"w":630,"h":410},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":630,"h":410},
+	"sourceSize": {"w":630,"h":410}
+},
+"displacement_fish1.png":
+{
+	"frame": {"x":886,"y":0,"w":209,"h":76},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":209,"h":76},
+	"sourceSize": {"w":209,"h":76}
+},
+"displacement_fish2.png":
+{
+	"frame": {"x":1095,"y":0,"w":148,"h":93},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":148,"h":93},
+	"sourceSize": {"w":148,"h":93}
+},
+"displacement_fish3.png":
+{
+	"frame": {"x":1243,"y":0,"w":193,"h":94},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":193,"h":94},
+	"sourceSize": {"w":193,"h":94}
+},
+"displacement_fish4.png":
+{
+	"frame": {"x":1436,"y":0,"w":177,"h":105},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":177,"h":105},
+	"sourceSize": {"w":177,"h":105}
+},
+"displacement_map.png":
+{
+	"frame": {"x":0,"y":410,"w":512,"h":512},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":512,"h":512},
+	"sourceSize": {"w":512,"h":512}
+},
+"lightmap.png":
+{
+	"frame": {"x":512,"y":410,"w":512,"h":512},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":512,"h":512},
+	"sourceSize": {"w":512,"h":512}
+},
+"overlay.png":
+{
+	"frame": {"x":1024,"y":410,"w":512,"h":512},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":512,"h":512},
+	"sourceSize": {"w":512,"h":512}
+}},
+"animations": {
+	"displacement_fish": ["displacement_fish1.png","displacement_fish2.png","displacement_fish3.png","displacement_fish4.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "fish.png",
+	"format": "RGBA8888",
+	"size": {"w":1613,"h":922},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:28ebf743f84b40801f14fc84adfd8678:6b094ab691e1ac712c71c140f3054926:812c73087df3a95dd7b25826628587f1$"
+}
+}
