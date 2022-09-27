@@ -17,10 +17,12 @@ document.body.appendChild(app.view)
 let loader = app.loader
 // 这里放置鱼的数据组
 let fishContainer = new Container()
+let bgCintainer = new Container()
 app.stage.addChild(fishContainer);
+app.stage.addChild(bgCintainer)
 
 let fishs = [], fishNum = 4, fishTime = 10
-let speed = 3, direction = -1
+let speed = 1, direction = -1,texturesOverLay = null
 
 loader
   .add('imgs/fish.json')
@@ -32,28 +34,27 @@ function setup(loader, resources){
   let texturesBg = new Sprite(textures['displacement_BG.jpeg'])
   fishContainer.addChild(texturesBg)
 
-  // 鱼鱼
+  // create fishes
   for(let i = 1 ; i <= fishTime ; i++){
     let index = i % fishNum == 0 ? 1 :   i % fishNum 
-    let fish = new Sprite(textures[`displacement_fish${ index }.png`])
-    // 随便设置鱼的位置，并且将
-    fish.x = random(0,window.innerWidth)
-    fish.y = random(0,window.innerHeight)
-    fish.anchor.set(0,0.5)
-    // 这里可以修改坐标系的操作
-    fish.vx = random(1,speed) 
-    fish.vy = random(1,speed)
-    fish.vRotation =  180 - Math.atan(fish.vy / fish.vx)
-
+    let fish = onCreateFish(textures, index)
     fishContainer.addChild(fish)
     fishs.push(fish)
   }
 
   // 水波
-  let texturesOverLay = new Sprite(textures['overlay.png'])
+  texturesOverLay = new Sprite(textures['overlay.png'])
   texturesBg.width = texturesOverLay.width = window.innerWidth
   texturesBg.height = texturesOverLay.height = window.innerHeight
-  fishContainer.addChild(texturesOverLay)
+
+  // // 这个过滤是有问题的
+  // let filter = new PIXI.filters.DisplacementFilter(texturesOverLay);
+  console.log(new PIXI.filters.DisplacementFilter(texturesOverLay))
+  // filter.scale.y = 20
+  // filter.scale.x = 20
+  // bgCintainer.filters = [filter]
+  bgCintainer.addChild(texturesOverLay)
+
 }
 
 // 随机生成整数
@@ -69,11 +70,28 @@ function randomStr(arr){
 function play(){
   window.requestAnimationFrame(play)
   fishs.forEach(fish => {
-    // 这里是fish的情况
-    fish.x += fish.vx
-    fish.y += fish.vy
+    fish.x -= fish.vx
+    fish.y -= fish.vy
   })
 }
 
 play()
 
+
+function onCreateFish(textures, index){
+  let fish = new Sprite(textures[`displacement_fish${ index }.png`])
+  fish.rotation =  random(0,360)
+  fish.anchor.set(0.5,0.5)
+  fish.x = random(0,window.innerWidth)
+  fish.y = random(0,window.innerHeight)
+  let x = random(1,speed) 
+  fish.vx = x *  Math.cos(fish.rotation)
+  fish.vy = x * Math.sin(fish.rotation)
+  return fish
+}
+
+// 发生碰撞
+function onCrush(fish){
+  // 判断是否发生了碰撞
+  // 碰撞之后的处理方式是如何的了？
+}
