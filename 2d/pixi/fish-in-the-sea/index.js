@@ -19,7 +19,6 @@ let loader = app.loader
 let fishContainer = new Container()
 let bgCintainer = new Container()
 app.stage.addChild(fishContainer);
-app.stage.addChild(bgCintainer)
 
 let fishs = [], fishNum = 4, fishTime = 10
 let speed = 1, direction = -1,texturesOverLay = null
@@ -43,15 +42,16 @@ function setup(loader, resources){
   }
 
   // 水波
+  
   texturesOverLay = new Sprite(textures['overlay.png'])
   texturesBg.width = texturesOverLay.width = window.innerWidth
   texturesBg.height = texturesOverLay.height = window.innerHeight
-  texturesOverLay.scale.y = 5
-  texturesOverLay.scale.x = 6
-  bgCintainer.addChild(texturesOverLay)
+  texturesOverLay.scale.y = 50
+  texturesOverLay.scale.x = 50
 
-  let filter = new PIXI.filters.DisplacementFilter(texturesOverLay.current);
-  texturesOverLay.filters = [filter]
+  app.stage.addChild(texturesOverLay)
+  let filter = new PIXI.filters.DisplacementFilter(texturesOverLay);
+  app.stage.filters = [filter]
 }
 
 // 随机生成整数
@@ -66,8 +66,6 @@ function randomStr(arr){
 
 function play(){
   window.requestAnimationFrame(play)
-  texturesOverLay.x += 0.1
-  texturesOverLay.y += 0.1
   fishs.forEach(fish => {
     fish.x -= fish.vx
     fish.y -= fish.vy
