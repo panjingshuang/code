@@ -46,15 +46,12 @@ function setup(loader, resources){
   texturesOverLay = new Sprite(textures['overlay.png'])
   texturesBg.width = texturesOverLay.width = window.innerWidth
   texturesBg.height = texturesOverLay.height = window.innerHeight
-
-  // // 这个过滤是有问题的
-  // let filter = new PIXI.filters.DisplacementFilter(texturesOverLay);
-  console.log(new PIXI.filters.DisplacementFilter(texturesOverLay))
-  // filter.scale.y = 20
-  // filter.scale.x = 20
-  // bgCintainer.filters = [filter]
+  texturesOverLay.scale.y = 5
+  texturesOverLay.scale.x = 6
   bgCintainer.addChild(texturesOverLay)
 
+  let filter = new PIXI.filters.DisplacementFilter(texturesOverLay.current);
+  texturesOverLay.filters = [filter]
 }
 
 // 随机生成整数
@@ -69,6 +66,8 @@ function randomStr(arr){
 
 function play(){
   window.requestAnimationFrame(play)
+  texturesOverLay.x += 0.1
+  texturesOverLay.y += 0.1
   fishs.forEach(fish => {
     fish.x -= fish.vx
     fish.y -= fish.vy
