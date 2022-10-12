@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas Clock</title>
+    <style>
+        #clock {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <canvas id="clock" height="1080" width="1920"></canvas>
+    </div>
+</body>
+<script>
+    const canvas = document.getElementById('clock');
+    const ctx = canvas.getContext('2d');
+    const width = ctx.canvas.width;
+    const height = ctx.canvas.height;
+    const r = height / 2;
+    // const rem = width / 200;  //比例
+    ctx.beginPath();
+    ctx.arc(500, 300, 60, 0, 2 * Math.PI)
+    ctx.stroke()
+
+    // //画圆
+    function drawBackground(an) {
+        ctx.beginPath();
+        ctx.moveTo(500, 300)
+        const oX = 500 + 60 * Math.cos(an * (Math.PI / 180))
+        const oY = 300 + 60 * Math.sin(an * (Math.PI / 180))
+        ctx.lineTo(oX, oY)
+        ctx.stroke()
+        ctx.beginPath();
+        let r = 10
+        let x1 = (oX - r * Math.cos(45)) 
+        let y1 = (oY + r * Math.sin(45)) 
+        let x2 = oX -  r * Math.cos(45)
+        let y2 = oY - r * Math.sin(45)
+        ctx.save()
+        ctx.translate(oX,oY)
+        ctx.rotate( an * (Math.PI / 180) )
+        ctx.moveTo(x1 - oX,y1 - oY)
+        ctx.lineTo(0,0)
+        ctx.lineTo(x2 - oX,y2 - oY)
+        ctx.restore()
+        ctx.stroke()
+    }
+    const anArr = [0,90,180,270,150,60]
+
+    anArr.forEach(v => {
+      drawBackground(v)
+    })
+</script>
