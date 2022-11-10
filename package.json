@@ -1,11 +1,21 @@
 {
-  "devDependencies": {
-    "promises-aplus-tests": "^2.1.2"
-  },
+  "name": "code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "promises-aplus-tests my-promise"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "three": "^0.142.0"
+    "@vitejs/plugin-vue": "^3.2.0",
+    "three": "^0.146.0",
+    "vite": "^3.2.3",
+    "vue": "^3.2.44",
+    "vue-router": "^4.1.6"
   }
 }
