@@ -8,6 +8,10 @@ const routes = [
   {
     path: '/base', 
     component: () => import('/src/views/base.vue'),
+  },
+  {
+    path: '/buffer', 
+    component: () => import('/src/views/BufferGeometry.vue'),
   }
 ]
 export default createRouter({

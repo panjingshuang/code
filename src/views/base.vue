@@ -6,6 +6,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { onMounted, render } from 'vue'
 import { gsap } from 'gsap'
+import * as dat from 'dat.gui'
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 5
@@ -35,6 +36,11 @@ onMounted(() => {
   // gsap.to(cube.position,{
   //   x: 5
   // })
+  // GUI 图形图像来操作元素的变换
+  const gui = new  dat.GUI()
+  // 重新绘制元素
+  // gui.add(cube.position, 'x').min(0).max(100).name('X坐标')
+
 })
 
 </script>
