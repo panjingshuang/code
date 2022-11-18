@@ -12,6 +12,10 @@ const routes = [
   {
     path: '/buffer', 
     component: () => import('/src/views/BufferGeometry.vue'),
+  },
+  {
+    path: '/material', 
+    component: () => import('/src/views/materialDemo.vue'),
   }
 ]
 export default createRouter({
