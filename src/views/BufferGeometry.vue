@@ -27,22 +27,22 @@ onMounted(() => {
   baseDom.appendChild(renderer.domElement);
   renderer.setSize(window.innerWidth, window.innerHeight);
   orbitControls = new OrbitControls(camera, renderer.domElement)
-  const axesHelper = new THREE.AxesHelper( 5 );
-  scene.add( axesHelper )
+  const axesHelper = new THREE.AxesHelper(5);
+  scene.add(axesHelper)
   // 随机生成三角形面来显示不同颜色和不同
   for (let i = 1; i <= GEONUM; i++) {
-    let  geometry = new THREE.BufferGeometry()
-    let  positionArray = new Float32Array(9);
-    for(let j=0;j<9;j++){
+    let geometry = new THREE.BufferGeometry()
+    let positionArray = new Float32Array(9);
+    for (let j = 0; j < 9; j++) {
       positionArray[j] = Math.random() * 3
     }
-    geometry.setAttribute('position',new THREE.BufferAttribute(positionArray,3))
-    let color = new THREE.Color(Math.random(), Math.random(),Math.random())
-    let material = new THREE.MeshBasicMaterial({color,transparent:true,opacity: 0.6})
+    geometry.setAttribute('position', new THREE.BufferAttribute(positionArray, 3))
+    let color = new THREE.Color(Math.random(), Math.random(), Math.random())
+    let material = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.6 })
     let mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
   }
-  
+
   // geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
   // const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
   // const mesh = new THREE.Mesh(geometry, material)
