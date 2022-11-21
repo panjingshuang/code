@@ -36,6 +36,7 @@ onMounted(() => {
   let envDoor = new THREE.TextureLoader().load('/textures/door/ambientOcclusion.jpg')
   let metalness = new THREE.TextureLoader().load('/textures/door/metalness.jpg')
   let roughness = new THREE.TextureLoader().load('/textures/door/roughness.jpg')
+  let normal = new THREE.TextureLoader().load('/textures/door/normal.jpg')
   // let heightDoor = new THREE.TextureLoader().load('/textures/door/height.jpg') 
   // texture.wrapS = THREE.RepeatWrapping; // 横向重复
   // texture.wrapT = THREE.RepeatWrapping; // 纵向重复
@@ -52,6 +53,7 @@ onMounted(() => {
     roughness:1,
     metalnessMap: metalness,
     metalness:1,
+    normalMap:normal // 注入之后门会反光会有凹凸变换很真实了
     // displacementMap: heightDoor, // 这个好像对性能的消耗非常的大，导入之后就会很卡
     // displacementScale: 0.05
   })
