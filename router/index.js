@@ -16,6 +16,10 @@ const routes = [
   {
     path: '/material', 
     component: () => import('/src/views/materialDemo.vue'),
+  },
+  {
+    path: '/loadManager', 
+    component: () => import('/src/views/LoadManager.vue'),
   }
 ]
 export default createRouter({
