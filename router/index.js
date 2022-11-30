@@ -20,6 +20,10 @@ const routes = [
   {
     path: '/loadManager', 
     component: () => import('/src/views/LoadManager.vue'),
+  },
+  {
+    path: '/envmap', 
+    component: () => import('/src/views/EnvMapDemo.vue'),
   }
 ]
 export default createRouter({
