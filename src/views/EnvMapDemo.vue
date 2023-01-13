@@ -23,24 +23,25 @@ onMounted(() => {
   let baseDom = document.getElementById('base')
   baseDom.appendChild(renderer.domElement);
   renderer.setSize(window.innerWidth, window.innerHeight);
-  const geometry = new THREE.BoxGeometry(1, 1, 1)
-  const matrial = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-  const cube = new THREE.Mesh(geometry, matrial)
-  scene.add(cube)
+  // 控制器
   orbitControls =  new OrbitControls(camera, renderer.domElement)
-  const axesHelper = new THREE.AxesHelper( 5 );
-  scene.add( axesHelper 
+  // const axesHelper = ne
   // 数据图片加载
-
-  // scene.background = new THREE.CubeTextureLoader().setPath( 'textures/cubeMaps/' )
-	// .load( [
-	// 	'px.png',
-	// 	'nx.png',
-	// 	'py.png',
-	// 	'ny.png',
-	// 	'pz.png',
-	// 	'nz.png'
-	// ] );
+  // 全景图设置的方式有两种，一种是放置到场景的背景上
+  // scene.background 
+  let loader = new THREE.CubeTextureLoader() // 这里是加载器
+  loader.setPath( '../textures/environmentMaps/4/' )
+  // 依次顺序是left right top bottom front back
+	let texture = loader.load( [
+		'quanjing.right.jpg',
+		'quanjing.left.jpg',
+		'quanjing.top.jpg',
+		'quanjing.bottom.jpg',
+		'quanjing.front.jpg',
+		'quanjing.back.jpg',
+	])
+  // left 和 
+  scene.background = texture
   
 })
 
